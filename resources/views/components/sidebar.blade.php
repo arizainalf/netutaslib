@@ -24,6 +24,9 @@
             <li class="nav-item">
                 <a href="#" class="nav-link"><i class="fas fa-book-open"></i> <span>Peminjaman</span></a>
             </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link"><i class="fas fa-walking"></i> <span>Kunjungan</span></a>
+            </li>
         </ul>
 
         {{-- <div class="hide-sidebar-mini mt-4 mb-4 p-3">

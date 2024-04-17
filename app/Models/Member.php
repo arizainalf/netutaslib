@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use App\Models\Loan;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Visit;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Member extends Model
 {
@@ -14,5 +15,9 @@ class Member extends Model
     public function loans()
     {
         return $this->hasMany(Loan::class);
+    }
+    public function visits()
+    {
+        return $this->hasMany(Visit::class);
     }
 }
