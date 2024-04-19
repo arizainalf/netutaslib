@@ -17,9 +17,7 @@ const datatableCall = (targetId, url, columns) => {
             [25, 50, 100, 250, -1],
             [25, 50, 100, 250, "All"],
         ],
-        // language: {
-        //     url: "//cdn.datatables.net/plug-ins/1.13.7/i18n/id.json",
-        // },
+        // su
         columnDefs: [{ width: "5%", targets: 0 }],
     });
 };
@@ -63,21 +61,9 @@ const getModal = (targetId, url = null, fields = null) => {
         const successCallback = function (response) {
             fields.forEach((field) => {
                 if (response.data[field]) {
-                    if (field == "tugas") {
-                        const selectElem = $(`#${targetId} #${field}`);
-                        selectElem.val([]).trigger("change");
-                        let string = response.data[field];
-                        let array = string
-                            .split(",")
-                            .map((item) => item.trim());
-
-                        selectElem.prop("multiple", true);
-                        selectElem.val(array).trigger("change");
-                    } else {
-                        $(`#${targetId} #${field}`)
-                            .val(response.data[field])
-                            .trigger("change");
-                    }
+                    $(`#${targetId} #${field}`)
+                        .val(response.data[field])
+                        .trigger("change");
                 }
             });
         };

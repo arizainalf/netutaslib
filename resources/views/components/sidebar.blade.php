@@ -8,24 +8,28 @@
         </div>
         <ul class="sidebar-menu">
             <li class="nav-item ">
-                <a href="#" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
+                <a href="{{ url('/') }}" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
             </li>
             {{-- <li class="menu-header">Starter</li> --}}
             <li class="nav-item {{ Request::is('category') ? 'active' : '' }}">
                 <a href="{{ url('category') }}" class="nav-link"><i class="fas fa-columns"></i>
                     <span>Kategori</span></a>
             </li>
-            <li class="nav-item ">
-                <a href="#" class="nav-link"><i class="fas fa-book"></i> <span>Buku</span></a>
+            <li class="nav-item {{ Request::is('book') ? 'active' : '' }}">
+                <a href="{{ url('book') }}" class="nav-link"><i class="fas fa-book"></i> <span>Buku</span></a>
             </li>
             <li class="nav-item {{ Request::is('member') ? 'active' : '' }}">
                 <a href="{{ url('member') }}" class="nav-link"><i class="fas fa-users"></i> <span>Member</span></a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link"><i class="fas fa-book-open"></i> <span>Peminjaman</span></a>
+                <a href="{{ url('loan') }}" class="nav-link"><i class="fas fa-book-open"></i>
+                    <span>Peminjaman</span></a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link"><i class="fas fa-walking"></i> <span>Kunjungan</span></a>
+                <a href="{{ url('visit') }}" class="nav-link"><i class="fas fa-walking"></i> <span>Kunjungan</span></a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url('user') }}" class="nav-link"><i class="fas fa-user"></i> <span>User</span></a>
             </li>
         </ul>
 
