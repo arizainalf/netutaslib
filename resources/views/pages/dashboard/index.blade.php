@@ -4,10 +4,8 @@
 
 @push('style')
     <!-- CSS Libraries -->
-    <link rel="stylesheet"
-        href="{{ asset('library/jqvmap/dist/jqvmap.min.css') }}">
-    <link rel="stylesheet"
-        href="{{ asset('library/summernote/dist/summernote-bs4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('library/jqvmap/dist/jqvmap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('library/summernote/dist/summernote-bs4.min.css') }}">
 @endpush
 
 @section('main')
@@ -27,7 +25,7 @@
                                 <h4>Kategori</h4>
                             </div>
                             <div class="card-body">
-                                10
+                                {{-- {{ count($category) }} --}}
                             </div>
                         </div>
                     </div>
@@ -42,7 +40,7 @@
                                 <h4>Buku</h4>
                             </div>
                             <div class="card-body">
-                                42
+                                {{-- {{ $books }} --}}
                             </div>
                         </div>
                     </div>
@@ -57,13 +55,13 @@
                                 <h4>Member</h4>
                             </div>
                             <div class="card-body">
-                                1,201
+                                {{-- {{ $members }} --}}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
         </section>
     </div>
 @endsection

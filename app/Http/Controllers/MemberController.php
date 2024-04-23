@@ -30,7 +30,7 @@ class MemberController extends Controller
                     ->make(true);
             }
 
-            return $this->successResponse($member, 'Data Member ditemukan.');
+            return $this->successResponse($members, 'Data Member ditemukan.');
         }
 
         return view('pages.member.index');

@@ -10,7 +10,6 @@
             <li class="nav-item ">
                 <a href="{{ url('/') }}" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
             </li>
-            {{-- <li class="menu-header">Starter</li> --}}
             <li class="nav-item {{ Request::is('category') ? 'active' : '' }}">
                 <a href="{{ url('category') }}" class="nav-link"><i class="fas fa-columns"></i>
                     <span>Kategori</span></a>
@@ -25,7 +24,7 @@
                 <a href="{{ url('loan') }}" class="nav-link"><i class="fas fa-book-open"></i>
                     <span>Peminjaman</span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {{ Request::is('visit') ? 'active' : '' }}">
                 <a href="{{ url('visit') }}" class="nav-link"><i class="fas fa-walking"></i> <span>Kunjungan</span></a>
             </li>
             <li class="nav-item">

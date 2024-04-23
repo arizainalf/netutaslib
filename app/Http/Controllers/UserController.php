@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Traits\JsonResponder;
 use DataTables;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
