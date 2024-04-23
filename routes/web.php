@@ -32,6 +32,10 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/offline', function () {
     return view('vendor.laravelpwa.offline');
 });
+
+Route::get('/storage-link', function () {
+    Artisan::call('storage-link');
+});
 Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     // Route::get('/', function () {
