@@ -1,6 +1,6 @@
 @extends('layouts.auth')
 
-@section('title', 'Masuk')
+@section('title', 'Lupa Password')
 
 @push('style')
 @endpush
@@ -14,46 +14,27 @@
                     <div class="text-center mb-4">
                         <img src="{{ asset('images/icons/icon-72x72.png') }}" alt="logo">
                     </div>
-                    <h4 class="text-dark text-center mb-2 font-weight-normal">Selamat Datang di</h4>
+                    <h4 class="text-dark text-center mb-2 font-weight-normal">Lupa Password</h4>
                     <h4 class="font-weight-bold text-dark text-center mb-2">{{ config('app.name') }}</h4>
-                    <small class='text-center mb-3 d-block '>Perpustakaan SMP Negeri 7 Tasikmalaya</small>
-                    <form id="login" autocomplete="off">
+                    <small class='text-center mb-3 d-block '>Netutas Library</small>
+                    <form id="forgot-password" autocomplete="off">
                         <div class="form-group">
                             <label for="email">Email <span class="text-danger">*</span></label>
                             <input id="email" type="email" class="form-control" name="email">
                             <small class="invalid-feedback" id="erroremail"></small>
                         </div>
                         <div class="form-group">
-                            <label for="password" class="control-label">Password <span class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <input id="password" type="password" class="form-control" name="password">
-                                <div class="input-group-append">
-                                    <a class="btn bg-white d-flex justify-content-center align-items-center border"
-                                        onclick="togglePasswordVisibility('#password', '#toggle-password'); event.preventDefault();">
-                                        <i id="toggle-password" class="fas fa-eye"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <small class="text-danger" id="errorpassword"></small>
-                        </div>
-                        <div class="form-group">
                             <button type="submit" class="btn btn-block btn-primary btn-lg btn-icon icon-right">
-                                <i class="fas fa-sign-in mr-2"></i>Masuk
+                                Lupa Password
                             </button>
-                        </div>
-                        <div class="form-group">
-                            <a class="btn btn-block btn-success btn-lg btn-icon icon-right" href="{{ url('/attend') }}"
-                                role="button"><i class="fa-solid fa-bookmark mr-2"></i>Kunjungan</a>
                         </div>
                     </form>
                     <div class="text-center">
-                        <a href="{{ route('password.request') }}" class="text-small font-weight-bold">Lupa Password ?</a>
+                        <a href="{{ route('login') }}" class="text-small font-weight-bold">Login sekarang</a>
                     </div>
                     <div class="text-small mt-5 text-center">
                         Copyright &copy; {{ date('Y') }} <div class="bullet"></div> Create By Ari Zainal Fauziah
-
                     </div>
-
                 </div>
             </div>
             <div class="d-none d-lg-block col-lg-8 py-5 min-vh-100 background-walk-y position-relative overlay-gradient-bottom order-1"
@@ -61,8 +42,9 @@
                 <div class="absolute-bottom-left index-2">
                     <div class="text-light p-5 pb-2">
                         <div class="mb-5 pb-3">
-                            <h5 class="font-weight-normal text-muted-transparent">SMP Negeri 7 Tasikmalaya</h5>
+                            <h5 class="font-weight-normal text-muted-transparent">SMPN 7 TASIKMALAYA</h5>
                             <h5 class="font-weight-normal text-muted-transparent">SEKOLAHKU NYAMAN
+                            </h5>
                         </div>
                     </div>
                 </div>
@@ -76,22 +58,20 @@
 
     <script>
         $(document).ready(function() {
-            $("#login").submit(function(e) {
-                setButtonLoadingState("#login .btn.btn-primary", true, "Masuk");
+            $("#forgot-password").submit(function(e) {
+                setButtonLoadingState("#forgot-password .btn.btn-primary", true, "Lupa Password");
                 e.preventDefault();
-                const url = "{{ route('login') }}";
+                const url = "{{ route('password.email') }}";
                 const data = new FormData(this);
 
                 const successCallback = function(response) {
-                    setButtonLoadingState("#login .btn.btn-primary", false,
-                        "<i class='fas fa-sign-in mr-2'></i>Masuk");
-                    handleSuccess(response, null, null, "/");
+                    setButtonLoadingState("#forgot-password .btn.btn-primary", false, "Lupa Password");
+                    handleSuccess(response, null, null, "/login");
                 };
 
                 const errorCallback = function(error) {
-                    setButtonLoadingState("#login .btn.btn-primary", false,
-                        "<i class='fas fa-sign-in mr-2'></i>Masuk");
-                    handleValidationErrors(error, "login", ["email", "password"]);
+                    setButtonLoadingState("#forgot-password .btn.btn-primary", false, "Lupa Password");
+                    handleValidationErrors(error, "forgot-password", ["email"]);
                 };
 
                 ajaxCall(url, "POST", data, successCallback, errorCallback);

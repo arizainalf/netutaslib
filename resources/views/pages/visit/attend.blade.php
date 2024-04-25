@@ -34,7 +34,7 @@
                                 name="keyword">
 
                             <div class="input-group-append">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-success">
                                     <i class="fas fa-search"></i>
                                 </button>
                             </div>

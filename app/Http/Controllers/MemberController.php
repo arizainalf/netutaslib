@@ -107,7 +107,6 @@ class MemberController extends Controller
         if (!$member) {
             return $this->errorResponse(null, 'Data Member Tidak Ada!');
         }
-
         $member->delete();
 
         return $this->successResponse(null, 'Data Member Dihapus!');

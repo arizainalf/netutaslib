@@ -8,6 +8,8 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VisitController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,8 +35,13 @@ Route::get('/offline', function () {
     return view('vendor.laravelpwa.offline');
 });
 
+Route::get('/forgot-password', [App\Http\Controllers\AuthController::class, 'forgotPassword'])->middleware('guest')->name('password.request');
+Route::post('/forgot-password', [App\Http\Controllers\AuthController::class, 'forgotPassword'])->middleware('guest')->name('password.email');
+Route::get('/reset-password/{token}', [App\Http\Controllers\AuthController::class, 'resetPassword'])->name('password.reset');
+Route::post('/reset-password', [App\Http\Controllers\AuthController::class, 'resetPassword'])->name('password.update');
+
 Route::get('/storage-link', function () {
-    Artisan::call('storage-link');
+    Artisan::call('storage:link');
 });
 Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -45,6 +52,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('member', MemberController::class)->names('member');
     Route::resource('book', BookController::class)->names('book');
     Route::resource('user', UserController::class)->names('user');
+    Route::resource('visit', VisitController::class)->names('visit');
     Route::match(['get', 'put'], 'profil', [ProfilController::class, 'index'])->name('profil');
     Route::put('profil/password', [ProfilController::class, 'updatePassword'])->name('profil.password');
 });

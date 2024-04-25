@@ -24,6 +24,7 @@ class SearchController extends Controller
         $keyword = $request->keyword;
 
         $member = Member::where('nisn', $keyword)->orWhere('nipd', $keyword)->first();
+
         return $this->successResponse($member, 'Data Member Ditemukan!');
     }
     public function saveAttend(Request $request)
