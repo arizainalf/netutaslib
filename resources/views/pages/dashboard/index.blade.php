@@ -25,7 +25,7 @@
                                 <h4>Kategori</h4>
                             </div>
                             <div class="card-body">
-                                {{-- {{ count($category) }} --}}
+                                {{ $category }}
                             </div>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                                 <h4>Buku</h4>
                             </div>
                             <div class="card-body">
-                                {{-- {{ $books }} --}}
+                                {{ $books }}
                             </div>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                                 <h4>Member</h4>
                             </div>
                             <div class="card-body">
-                                {{-- {{ $members }} --}}
+                                {{ $members }}
                             </div>
                         </div>
                     </div>

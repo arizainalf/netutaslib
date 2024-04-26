@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LoanController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\SearchController;
@@ -53,6 +54,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('book', BookController::class)->names('book');
     Route::resource('user', UserController::class)->names('user');
     Route::resource('visit', VisitController::class)->names('visit');
+    Route::get('loan/approve/{id}', [LoanController::class, 'approve'])->name('approve');
+    Route::resource('loan', LoanController::class)->names('loan');
     Route::match(['get', 'put'], 'profil', [ProfilController::class, 'index'])->name('profil');
     Route::put('profil/password', [ProfilController::class, 'updatePassword'])->name('profil.password');
 });

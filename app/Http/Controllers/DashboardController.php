@@ -12,10 +12,10 @@ class DashboardController extends Controller
     use JsonResponder;
     public function index()
     {
-        $books = Book::all();
-        $category = Category::all();
-        $members = Member::all();
+        $books = Book::count();
+        $category = Category::count();
+        $members = Member::count();
 
-        return view('pages.dashboard.index');
+        return view('pages.dashboard.index', compact('books', 'category', 'members'));
     }
 }

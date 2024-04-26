@@ -21,4 +21,13 @@ class Book extends Model
     {
         return $this->hasMany(Loan::class);
     }
+
+    public function toArray()
+    {
+        $array = parent::toArray();
+
+        $array['nama'] = $array['judul'];
+
+        return $array;
+    }
 }

@@ -177,6 +177,29 @@ const confirmDelete = (url, tableId) => {
         }
     });
 };
+const confirmApprove = (url, tableId) => {
+    swal({
+        title: "Apakah Kamu Yakin?",
+        text: "Konfirmasi Pengembalian Buku Ini?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((willApprove) => {
+        if (willApprove) {
+            const data = null;
+
+            const successCallback = function (response) {
+                handleSuccess(response, tableId, null);
+            };
+
+            const errorCallback = function (error) {
+                console.log(error);
+            };
+
+            ajaxCall(url, "GET", data, successCallback, errorCallback);
+        }
+    });
+};
 
 const setButtonLoadingState = (buttonSelector, isLoading, title = "Simpan") => {
     const buttonText = isLoading
@@ -201,35 +224,9 @@ const select2ToJson = (selector, url, modal = null, jenis = "null") => {
         const responseList = response.data;
         responseList.forEach(function (row) {
             const option = $("<option></option>");
-            if (jenis == "null") {
-                option.attr("value", row.id);
-                if (row.qty >= 0) {
-                    option.text(
-                        row.unit.nama !== "Kosong"
-                            ? row.nama +
-                                  " ( Jumlah Stok : " +
-                                  row.qty +
-                                  " " +
-                                  row.unit.nama +
-                                  " )"
-                            : row.nama + " ( Jumlah Stok : " + row.qty + " )"
-                    );
-                } else {
-                    option.text(row.nama);
-                }
-            } else if (jenis == "barang-bawah") {
-                option.attr("value", row.barang_id);
-                option.text(
-                    row.barang.unit.nama !== "Kosong"
-                        ? row.barang.nama +
-                              " ( Jumlah Stok : " +
-                              row.qty +
-                              " " +
-                              row.barang.unit.nama +
-                              " )"
-                        : row.barang.nama + " ( Jumlah Stok : " + row.qty + " )"
-                );
-            }
+            option.attr("value", row.id);
+            const label = row.nama ? row.nama : row.judul;
+            option.text(label);
             selectElem.append(option);
         });
 

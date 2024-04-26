@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('image');
             $table->integer('stok');
             $table->timestamps();
-            
+
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
