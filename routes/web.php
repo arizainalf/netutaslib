@@ -50,6 +50,7 @@ Route::middleware('auth')->group(function () {
     //     return view('pages.dashboard.index');
     // });
     Route::resource('category', CategoryController::class)->names('category');
+    Route::post('member/import', [MemberController::class, 'import'])->name('member.import');
     Route::resource('member', MemberController::class)->names('member');
     Route::resource('book', BookController::class)->names('book');
     Route::resource('user', UserController::class)->names('user');

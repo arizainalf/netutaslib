@@ -26,6 +26,15 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        <div class="mb-3">
+                            <a href="{{ route('member.show', 'pdf') }}" class="btn btn-sm px-3 btn-danger mr-1"
+                                target="_blank"><i class="fas fa-file-pdf mr-2"></i>Pdf</a>
+                            <a href="{{ route('member.show', 'excel') }}" class="btn btn-sm px-3 btn-info"
+                                target="_blank"><i class="fas fa-file-excel mr-2"></i>Excel</a>
+
+                            <button class="btn btn-sm px-3 btn-warning float-right" onclick="getModal('importModal')"><i
+                                    class="fas fa-file-excel mr-2"></i>Import Excel</button>
+                        </div>
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped" id="member-table" width="100%">
                                 <thead>
@@ -84,6 +93,8 @@
                 },
             ]);
 
+            $('.dropify').dropify();
+
             $("#saveData").submit(function(e) {
                 setButtonLoadingState("#saveData .btn.btn-success", true);
                 e.preventDefault();
@@ -104,6 +115,32 @@
                 const errorCallback = function(error) {
                     setButtonLoadingState("#saveData .btn.btn-success", false);
                     handleValidationErrors(error, "saveData", ["nama", "nisn", "nipd",
+                        "jenis_kelamin"
+                    ]);
+                };
+
+                ajaxCall(url, "POST", data, successCallback, errorCallback);
+            });
+            $("#uploadExcel").submit(function(e) {
+                setButtonLoadingState("#uploadExcel .btn.btn-success", true);
+                e.preventDefault();
+                const kode = $("#uploadExcel #id").val();
+                let url = "{{ route('member.import') }}";
+                const data = new FormData(this);
+
+                if (kode !== "") {
+                    data.append("_method", "PUT");
+                    url = `/member/${kode}`;
+                }
+
+                const successCallback = function(response) {
+                    setButtonLoadingState("#uploadExcel .btn.btn-success", false);
+                    handleSuccess(response, "member-table", "importModal");
+                };
+
+                const errorCallback = function(error) {
+                    setButtonLoadingState("#uploadExcel .btn.btn-success", false);
+                    handleValidationErrors(error, "uploadExcel", ["nama", "nisn", "nipd",
                         "jenis_kelamin"
                     ]);
                 };

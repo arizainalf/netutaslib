@@ -27,11 +27,22 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label for="tanggal_filter" class="form-label">Tanggal</label>
-                                    <input type="date" name="tanggal_filter" id="tanggal_filter"
+                                    <label for="tanggal_mulai" class="form-label">Tanggal Mulai</label>
+                                    <input type="date" name="tanggal_mulai" id="tanggal_mulai"
                                         value="{{ date('Y-m-d') }}" class="form-control">
                                 </div>
                             </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="tanggal_selesai" class="form-label">Tanggal Selesai</label>
+                                    <input type="date" name="tanggal_selesai" id="tanggal_selesai"
+                                        value="{{ date('Y-m-d') }}" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <a id="downloadPdf" class="btn btn-sm px-3 btn-danger mr-1" target="_blank"><i
+                                    class="fas fa-file-pdf mr-2"></i>Pdf</a>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped" id="visit-table" width="100%">
@@ -92,9 +103,18 @@
                 },
             ]);
 
-            $("#tanggal_filter").on("change", function() {
+            renderData();
+            $("#tanggal_mulai,#tanggal_selesai").on("change", function() {
                 $("#visit-table").DataTable().ajax.reload();
+                renderData();
             });
+
         });
+
+        const renderData = () => {
+            const downloadPdf =
+                `/visit?mode=pdf&tanggal_mulai=${$("#tanggal_mulai").val()}&tanggal_selesai=${$("#tanggal_selesai").val()}`;
+            $("#downloadPdf").attr("href", downloadPdf);
+        }
     </script>
 @endpush

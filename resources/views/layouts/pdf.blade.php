@@ -19,24 +19,22 @@
     </style>
     @stack('style')
 </head>
-</head>
 
 <body>
     <table width="100%" border="0" cellpadding="2.5" cellspacing="0">
         <tbody>
             <tr>
                 <td width='20%'>
-                    <img width='120px' src="{{ generateBase64Image(public_path('images/logo-pemkot.png')) }}"
-                        alt="">
+                    {{-- <img width='120px' src="{{ generateBase64Image(public_path('images/logo-pemkot.png')) }}"
+                        alt=""> --}}
                 </td>
                 <td align="center">
-                    <h3>PEMERINTAH KOTA TASIKMALAYA </h3>
-                    <h3>DINAS KESEHATAN</h3>
-                    <h3>PUBLIC SAFETY CENTER 119 SICETAR</h3>
+                    <h3>PERPUSTAKAAN SMPN 7 TASIKMALAYA </h3>
+                    <h3>KAMPUS MENGAJAR 7</h3>
+                    <h3>SEKOLAHKU NYAMAN</h3>
                     <div>
                         <span>
-                            Jl. Ir. H. Juanda (Komplek Perkantoran) Telp. (0265) 342437 Fax 342437
-                            KOTA TASIKMALAYA
+                            Jl. Letnan Dadi Suryatman No.76 46131 Tasikmalaya Jawa Barat
                         </span>
                     </div>
                 </td>
@@ -47,7 +45,6 @@
     </table>
     <hr style="height:1px;background-color:black;">
     @yield('main')
-
 
     @stack('scripts')
 

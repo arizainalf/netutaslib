@@ -23,7 +23,7 @@
                 class="col-lg-4 col-12 order-lg-1 min-vh-100 order-2 bg-white d-flex justify-content-center align-items-center">
                 <div class="py-2">
                     <div class="text-center mb-4">
-                        <img src="{{ asset('images/icons/icon-72x72.png') }}" alt="logo">
+                        <img src="{{ asset('images/icons/Netutas72.png') }}" alt="logo">
                     </div>
                     <h4 class="text-dark text-center mb-2 font-weight-normal">Selamat Datang di</h4>
                     <h4 class="font-weight-bold text-dark text-center mb-2">{{ config('app.name') }}</h4>

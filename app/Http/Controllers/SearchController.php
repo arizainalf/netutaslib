@@ -38,11 +38,15 @@ class SearchController extends Controller
             return $this->errorResponse($validator->errors(), 'Kepentingan Kunjungan Wajib Diisi!.', 422);
         }
 
-        $cekVisit = Visit::where('member_id', $request->member_id)->whereDate('created_at', date('Y-m-d'))->first();
+        $cekVisit = Visit::where('member_id', $request->member_id)->where('tanggal', date('Y-m-d'))->first();
         if ($cekVisit) {
             return $this->errorResponse(null, 'Maaf Anda Sudah Berkunjung Hari Ini!');
         }
-        $visit = Visit::create($request->only('member_id', 'deskripsi'));
+        $visit = Visit::create([
+            'member_id' => $request->member_id,
+            'deskripsi' => $request->deskripsi,
+            'tanggal' => now(),
+        ]);
         return $this->successResponse($visit, 'Data Kunjungan Disimpan!', 201);
     }
 }

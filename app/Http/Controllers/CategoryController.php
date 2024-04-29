@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Traits\JsonResponder;
+use Barryvdh\DomPDF\Facade\Pdf;
 use DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -55,20 +56,6 @@ class CategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        $category = Category::find($id);
-
-        if (!$category) {
-            return $this->errorResponse(null, 'Data Kategori Tidak Ada!');
-        }
-
-        return $this->successResponse($category, 'Data Kategori Ditemukan!');
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
@@ -105,5 +92,40 @@ class CategoryController extends Controller
         $category->delete();
 
         return $this->successResponse(null, 'Data Kategori Dihapus!');
+    }
+    public function show($id)
+    {
+        if ($id == "excel") {
+            ob_end_clean();
+            ob_start();
+            return Excel::download(new BarangExport(), 'Barang.xlsx');
+        } elseif ($id == 'pdf') {
+            $categories = Category::all();
+            $pdf = PDF::loadView('pages.category.pdf', compact('categories'));
+
+            $options = [
+                'margin_top' => 20,
+                'margin_right' => 20,
+                'margin_bottom' => 20,
+                'margin_left' => 20,
+            ];
+
+            $pdf->setOptions($options);
+            $pdf->setPaper('a4', 'landscape');
+
+            $namaFile = 'Kategori.pdf';
+
+            ob_end_clean();
+            ob_start();
+            return $pdf->stream($namaFile);
+        } else {
+            $barang = Barang::find($id);
+
+            if (!$barang) {
+                return $this->errorResponse(null, 'Data Barang tidak ditemukan.', 404);
+            }
+
+            return $this->successResponse($barang, 'Data Barang ditemukan.');
+        }
     }
 }

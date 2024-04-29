@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExportMembers;
+use App\Http\Controllers\Controller;
+use App\Imports\ImportMembers;
 use App\Models\Member;
 use App\Traits\JsonResponder;
+use Barryvdh\DomPDF\Facade\Pdf;
 use DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MemberController extends Controller
 {
@@ -58,20 +63,6 @@ class MemberController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        $member = Member::find($id);
-
-        if (!$member) {
-            return $this->errorResponse(null, 'Data Member Tidak Ada!');
-        }
-
-        return $this->successResponse($member, 'Data Member Ditemukan!');
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
@@ -110,5 +101,50 @@ class MemberController extends Controller
         $member->delete();
 
         return $this->successResponse(null, 'Data Member Dihapus!');
+    }
+    public function show($id)
+    {
+        if ($id == "excel") {
+            ob_end_clean();
+            ob_start();
+            return Excel::download(new ExportMembers(), 'Siswa.xlsx');
+        } elseif ($id == 'pdf') {
+            $members = Member::all();
+            $pdf = PDF::loadView('pages.member.pdf', compact('members'));
+
+            $options = [
+                'margin_top' => 20,
+                'margin_right' => 20,
+                'margin_bottom' => 20,
+                'margin_left' => 20,
+            ];
+
+            $pdf->setOptions($options);
+            $pdf->setPaper('a4', 'landscape');
+
+            $namaFile = 'Siswa.pdf';
+
+            ob_end_clean();
+            ob_start();
+            return $pdf->stream($namaFile);
+        } else {
+            $barang = Barang::find($id);
+
+            if (!$barang) {
+                return $this->errorResponse(null, 'Data Barang tidak ditemukan.', 404);
+            }
+
+            return $this->successResponse($barang, 'Data Barang ditemukan.');
+        }
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'excel' => 'required|file|mimes:xlsx,xls',
+        ]);
+        Excel::import(new ImportMembers(), request()->file('excel'));
+
+        return $this->successResponse(null, 'Data Excel Berhasil Di Import.');
     }
 }

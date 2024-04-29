@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Traits\JsonResponder;
+use Barryvdh\DomPDF\Facade\PDF;
 use DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -79,20 +80,6 @@ class BookController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        $book = Book::find($id);
-
-        if (!$book) {
-            return $this->errorResponse(null, 'Data Buku Tidak Ada!');
-        }
-
-        return $this->successResponse($book, 'Data Buku Ditemukan!');
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
@@ -156,5 +143,41 @@ class BookController extends Controller
         $book->delete();
 
         return $this->successResponse(null, 'Data Buku Dihapus!');
+    }
+
+    public function show($id)
+    {
+        if ($id == "excel") {
+            ob_end_clean();
+            ob_start();
+            return Excel::download(new BarangExport(), 'Barang.xlsx');
+        } elseif ($id == 'pdf') {
+            $books = Book::with('category')->get();
+            $pdf = PDF::loadView('pages.book.pdf', compact('books'));
+
+            $options = [
+                'margin_top' => 20,
+                'margin_right' => 20,
+                'margin_bottom' => 20,
+                'margin_left' => 20,
+            ];
+
+            $pdf->setOptions($options);
+            $pdf->setPaper('a4', 'landscape');
+
+            $namaFile = 'Book.pdf';
+
+            ob_end_clean();
+            ob_start();
+            return $pdf->stream($namaFile);
+        } else {
+            $barang = Barang::find($id);
+
+            if (!$barang) {
+                return $this->errorResponse(null, 'Data Barang tidak ditemukan.', 404);
+            }
+
+            return $this->successResponse($barang, 'Data Barang ditemukan.');
+        }
     }
 }

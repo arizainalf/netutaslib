@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Models\Loan;
 use App\Traits\JsonResponder;
+use Barryvdh\DomPDF\Facade\Pdf;
 use DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -141,5 +142,40 @@ class LoanController extends Controller
             'status' => '1',
         ]);
         return $this->successResponse($loan, 'Buku Yang Dipinjam sudah Dikembalikan!');
+    }
+    public function show($id)
+    {
+        if ($id == "excel") {
+            ob_end_clean();
+            ob_start();
+            return Excel::download(new BarangExport(), 'Barang.xlsx');
+        } elseif ($id == 'pdf') {
+            $loans = Loan::with('book', 'member', 'user')->get();
+            $pdf = PDF::loadView('pages.loan.pdf', compact('loans'));
+
+            $options = [
+                'margin_top' => 20,
+                'margin_right' => 20,
+                'margin_bottom' => 20,
+                'margin_left' => 20,
+            ];
+
+            $pdf->setOptions($options);
+            $pdf->setPaper('a4', 'landscape');
+
+            $namaFile = 'Peminjaman.pdf';
+
+            ob_end_clean();
+            ob_start();
+            return $pdf->stream($namaFile);
+        } else {
+            $barang = Barang::find($id);
+
+            if (!$barang) {
+                return $this->errorResponse(null, 'Data Barang tidak ditemukan.', 404);
+            }
+
+            return $this->successResponse($barang, 'Data Barang ditemukan.');
+        }
     }
 }

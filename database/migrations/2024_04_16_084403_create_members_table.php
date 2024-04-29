@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('members', function (Blueprint $table) {
             $table->id();
             $table->string('nisn')->unique();
-            $table->string('nipd')->unique();
+            $table->string('nipd')->unique()->nullable();
             $table->string('nama');
             $table->enum('jenis_kelamin', ['Laki - Laki', 'Perempuan']);
             $table->timestamps();

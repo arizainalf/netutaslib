@@ -7,6 +7,8 @@ const datatableCall = (targetId, url, columns) => {
             type: "GET",
             data: function (d) {
                 d.mode = "datatable";
+                d.tanggal_mulai = $("#tanggal_mulai").val() ?? null;
+                d.tanggal_selesai = $("#tanggal_selesai").val() ?? null;
                 d.bulan = $("#bulan_filter").val() ?? null;
                 d.tahun = $("#tahun_filter").val() ?? null;
                 d.tanggal = $("#tanggal_filter").val() ?? null;
