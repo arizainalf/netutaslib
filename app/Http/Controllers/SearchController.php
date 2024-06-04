@@ -27,6 +27,7 @@ class SearchController extends Controller
 
         return $this->successResponse($member, 'Data Member Ditemukan!');
     }
+    
     public function saveAttend(Request $request)
     {
         $validator = Validator::make($request->all(), [

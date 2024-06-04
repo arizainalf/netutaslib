@@ -100,7 +100,7 @@
 
                 if (kode !== "") {
                     data.append("_method", "PUT");
-                    url = `/user/${kode}`;
+                    url = `/admin/user/${kode}`;
                 }
 
                 const successCallback = function(response) {

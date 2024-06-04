@@ -26,8 +26,8 @@ class MemberController extends Controller
             if ($request->mode == "datatable") {
                 return DataTables::of($members)
                     ->addColumn('action', function ($member) {
-                        $editButton = '<button class="btn btn-sm btn-warning d-inline-flex  align-items-baseline  mr-1" onclick="getModal(`createModal`, `/member/' . $member->id . '`, [`id`, `nama`,`nipd`,`nisn`,`jenis_kelamin`])"><i class="fas fa-edit mr-1"></i>Edit</button>';
-                        $deleteButton = '<button class="btn btn-sm btn-danger d-inline-flex  align-items-baseline " onclick="confirmDelete(`/member/' . $member->id . '`, `member-table`)"><i class="fas fa-trash mr-1"></i>Hapus</button>';
+                        $editButton = '<button class="btn btn-sm btn-warning d-inline-flex  align-items-baseline  mr-1" onclick="getModal(`createModal`, `/admin/member/' . $member->id . '`, [`id`, `nama`,`nipd`,`nisn`,`jenis_kelamin`])"><i class="fas fa-edit mr-1"></i>Edit</button>';
+                        $deleteButton = '<button class="btn btn-sm btn-danger d-inline-flex  align-items-baseline " onclick="confirmDelete(`/admin/member/' . $member->id . '`, `member-table`)"><i class="fas fa-trash mr-1"></i>Hapus</button>';
                         return $editButton . $deleteButton;
                     })
                     ->addIndexColumn()
@@ -128,13 +128,13 @@ class MemberController extends Controller
             ob_start();
             return $pdf->stream($namaFile);
         } else {
-            $barang = Barang::find($id);
+            $member = Member::find($id);
 
-            if (!$barang) {
-                return $this->errorResponse(null, 'Data Barang tidak ditemukan.', 404);
+            if (!$member) {
+                return $this->errorResponse(null, 'Data Member tidak ditemukan.', 404);
             }
 
-            return $this->successResponse($barang, 'Data Barang ditemukan.');
+            return $this->successResponse($member, 'Data Member ditemukan.');
         }
     }
 

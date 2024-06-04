@@ -121,7 +121,7 @@
 
                 if (kode !== "") {
                     data.append("_method", "PUT");
-                    url = `/book/${kode}`;
+                    url = `/admin/book/${kode}`;
                 }
 
                 const successCallback = function(response) {

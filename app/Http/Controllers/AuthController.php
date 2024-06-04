@@ -20,7 +20,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         if (Auth::check()) {
-            return redirect('/');
+            return redirect('/admin');
         }
 
         if ($request->isMethod('post')) {

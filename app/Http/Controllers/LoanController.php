@@ -25,7 +25,7 @@ class LoanController extends Controller
             if ($request->mode == "datatable") {
                 return DataTables::of($loans)
                     ->addColumn('action', function ($loan) {
-                        $approveButton = $loan->status == '0' ? '<button class="btn btn-sm btn-info d-inline-flex  align-items-baseline " onclick="confirmApprove(`/loan/approve/' . $loan->id . '`, `loan-table`)"><i class="fa-solid fa-book-bookmark mr-1"></i>Konfirmasi</button>' : '<span class="badge badge-pill badge-success">Dikembalikan</span>';
+                        $approveButton = $loan->status == '0' ? '<button class="btn btn-sm btn-info d-inline-flex  align-items-baseline " onclick="confirmApprove(`/admin/loan/approve/' . $loan->id . '`, `loan-table`)"><i class="fa-solid fa-book-bookmark mr-1"></i>Konfirmasi</button>' : '<span class="badge badge-success">Dikembalikan</span>';
                         return $approveButton;
                     })
                     ->addColumn('user', function ($loan) {
@@ -45,9 +45,9 @@ class LoanController extends Controller
                     })
                     ->addColumn('status', function ($loan) {
                         if ($loan->status == '0') {
-                            return '<span class="badge badge-pill badge-primary">Dipinjam</span>';
+                            return '<span class="badge badge-primary">Dipinjam</span>';
                         } else {
-                            return '<span class="badge badge-pill badge-success">Dikembalikan</span>';
+                            return '<span class="badge badge-success">Dikembalikan</span>';
                         }
                     })
                     ->addIndexColumn()
@@ -57,10 +57,8 @@ class LoanController extends Controller
 
             return $this->successResponse($loans, 'Data Buku ditemukan.');
         }
-
         return view('pages.loan.index');
     }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -91,7 +89,7 @@ class LoanController extends Controller
     }
     /**
      * Update the specified resource in storage.
-     */
+     **/
     public function update(Request $request, string $id)
     {
         $validator = Validator::make($request->all(), [
@@ -109,11 +107,14 @@ class LoanController extends Controller
             return $this->errorResponse(null, 'Data Buku Tidak Ada!');
         }
 
+        $tanggalKembali = date('Y-m-d');
+
         $updateLoan = [
             'book_id' => $request->book_id,
             'member_id' => $request->member_id,
             'tanggal_mulai' => $tanggal,
             'tanggal_selesai' => $request->tanggal_selesai,
+            'tanggal_kembali' => $tanggalKembali,
         ];
 
         $book->update($updateBook);
@@ -131,15 +132,16 @@ class LoanController extends Controller
 
         return $kode;
     }
-
     public function approve(string $id)
     {
+        $tanggalKembali = date('Y-m-d');
         $loan = Loan::find($id);
         if (!$loan) {
             return $this->errorResponse(null, 'Data Peminjaman Tidak Ada!');
         }
         $loan->update([
             'status' => '1',
+            'tanggal_kembali' => $tanggalKembali,
         ]);
         return $this->successResponse($loan, 'Buku Yang Dipinjam sudah Dikembalikan!');
     }
@@ -148,7 +150,7 @@ class LoanController extends Controller
         if ($id == "excel") {
             ob_end_clean();
             ob_start();
-            return Excel::download(new BarangExport(), 'Barang.xlsx');
+            return Excel::download(new LoanExport(), 'Peminjaman.xlsx');
         } elseif ($id == 'pdf') {
             $loans = Loan::with('book', 'member', 'user')->get();
             $pdf = PDF::loadView('pages.loan.pdf', compact('loans'));
@@ -169,13 +171,13 @@ class LoanController extends Controller
             ob_start();
             return $pdf->stream($namaFile);
         } else {
-            $barang = Barang::find($id);
+            $barang = Loan::find($id);
 
             if (!$barang) {
-                return $this->errorResponse(null, 'Data Barang tidak ditemukan.', 404);
+                return $this->errorResponse(null, 'Data Peminjaman tidak ditemukan.', 404);
             }
 
-            return $this->successResponse($barang, 'Data Barang ditemukan.');
+            return $this->successResponse($barang, 'Data Peminjaman ditemukan.');
         }
     }
 }

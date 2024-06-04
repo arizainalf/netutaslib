@@ -15,7 +15,7 @@
                 <div class="d-sm-none d-lg-inline-block">Hi, {{ auth()->user()->nama ?? 'Login Dulu Bre!' }}</div>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-                <a href="{{ url('profil') }}" class="dropdown-item has-icon">
+                <a href="{{ url('admin/profil') }}" class="dropdown-item has-icon">
                     <i class="far fa-user"></i> Profile
                 </a>
 

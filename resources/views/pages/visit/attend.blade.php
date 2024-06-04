@@ -41,12 +41,19 @@
                         </div>
                     </form>
                     <form id="saveAttend">
+                        <input type="hidden" name="member_id" id="member_id">
+                        {{-- <input type="text" class="form-control" id="member_id" name="member_id"> --}}
                         <div class="form-group">
-                            <input type="hidden" name="member_id" id="member_id">
                             <label for="nama" class="form-label">Nama <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="nama" name="nama" readonly>
                             <small class="invalid-feedback" id="errornama"></small>
                         </div>
+                        {{-- <div class="form-group">
+                            <label for="id_member" class="form-label">Kategori<span class="text-danger">*</span></label>
+                            <select name="id_member" id="id_member" class="form-control">
+                            </select>
+                            <small class="invalid-feedback" id="errorid_member"></small>
+                        </div> --}}
                         <div class="form-group">
                             <label>Kepentingan Kunjungan</label>
                             <textarea id="deskripsi" name="deskripsi" class="form-control" data-height="100"></textarea>
@@ -88,6 +95,7 @@
                     $('#nama').val(response.data.nama);
                     $('#member_id').val(response.data.id);
                 };
+                select2ToJson("#id_member", "{{ route('member.index') }}");
 
                 const errorCallback = function(error) {
                     setButtonLoadingState("#search .btn.btn-primary", false,
@@ -126,6 +134,7 @@
 
                 ajaxCall(url, "POST", data, successCallback, errorCallback);
             });
+            // select2ToJson("#id_member", "member.index");
         });
     </script>
 @endpush

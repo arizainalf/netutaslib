@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
  */
 
 // Dashboard
-Route::match(['get', 'post'], '/login', [AuthController::class, 'login'])->name('login');
+Route::match(['get', 'post'], '/', [AuthController::class, 'login'])->name('login');
 Route::get('/attend', function () {
     return view('pages.visit.attend');
 });
@@ -44,7 +44,7 @@ Route::post('/reset-password', [App\Http\Controllers\AuthController::class, 'res
 Route::get('/storage-link', function () {
     Artisan::call('storage:link');
 });
-Route::middleware('auth')->group(function () {
+Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     // Route::get('/', function () {
     //     return view('pages.dashboard.index');

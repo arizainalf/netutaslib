@@ -23,8 +23,8 @@ class BookController extends Controller
             if ($request->mode == "datatable") {
                 return DataTables::of($books)
                     ->addColumn('action', function ($book) {
-                        $editButton = '<button class="btn btn-sm btn-warning d-inline-flex  align-items-baseline  mr-1" onclick="getModal(`createModal`, `/book/' . $book->id . '`, [`id`, `category_id`,`judul`,`penulis`,`penerbit`,`tahun`,`stok`])"><i class="fas fa-edit mr-1"></i>Edit</button>';
-                        $deleteButton = '<button class="btn btn-sm btn-danger d-inline-flex  align-items-baseline " onclick="confirmDelete(`/book/' . $book->id . '`, `book-table`)"><i class="fas fa-trash mr-1"></i>Hapus</button>';
+                        $editButton = '<button class="btn btn-sm btn-warning d-inline-flex  align-items-baseline  mr-1" onclick="getModal(`createModal`, `/admin/book/' . $book->id . '`, [`id`, `category_id`,`judul`,`penulis`,`penerbit`,`tahun`,`stok`])"><i class="fas fa-edit mr-1"></i>Edit</button>';
+                        $deleteButton = '<button class="btn btn-sm btn-danger d-inline-flex  align-items-baseline " onclick="confirmDelete(`/admin/book/' . $book->id . '`, `book-table`)"><i class="fas fa-trash mr-1"></i>Hapus</button>';
                         return $editButton . $deleteButton;
                     })
                     ->addColumn('image', function ($book) {
@@ -150,7 +150,7 @@ class BookController extends Controller
         if ($id == "excel") {
             ob_end_clean();
             ob_start();
-            return Excel::download(new BarangExport(), 'Barang.xlsx');
+            return Excel::download(new BookExport(), 'Buku.xlsx');
         } elseif ($id == 'pdf') {
             $books = Book::with('category')->get();
             $pdf = PDF::loadView('pages.book.pdf', compact('books'));
@@ -171,13 +171,13 @@ class BookController extends Controller
             ob_start();
             return $pdf->stream($namaFile);
         } else {
-            $barang = Barang::find($id);
+            $book = Book::find($id);
 
-            if (!$barang) {
-                return $this->errorResponse(null, 'Data Barang tidak ditemukan.', 404);
+            if (!$book) {
+                return $this->errorResponse(null, 'Data Buku tidak ditemukan.', 404);
             }
 
-            return $this->successResponse($barang, 'Data Barang ditemukan.');
+            return $this->successResponse($book, 'Data Buku ditemukan.');
         }
     }
 }

@@ -84,7 +84,7 @@
 
                 if (kode !== "") {
                     data.append("_method", "PUT");
-                    url = `/category/${kode}`;
+                    url = `/admin/category/${kode}`;
                 }
 
                 const successCallback = function(response) {

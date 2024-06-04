@@ -23,8 +23,8 @@ class UserController extends Controller
             if ($request->mode == "datatable") {
                 return DataTables::of($users)
                     ->addColumn('action', function ($user) {
-                        $editButton = '<button class="btn btn-sm btn-warning d-inline-flex  align-items-baseline  mr-1" onclick="getModal(`createModal`, `/user/' . $user->id . '`, [`id`, `nama`,`email`,`role`])"><i class="fas fa-edit mr-1"></i>Edit</button>';
-                        $deleteButton = '<button class="btn btn-sm btn-danger d-inline-flex  align-items-baseline " onclick="confirmDelete(`/user/' . $user->id . '`, `user-table`)"><i class="fas fa-trash mr-1"></i>Hapus</button>';
+                        $editButton = '<button class="btn btn-sm btn-warning d-inline-flex  align-items-baseline  mr-1" onclick="getModal(`createModal`, `/admin/user/' . $user->id . '`, [`id`, `nama`,`email`,`role`])"><i class="fas fa-edit mr-1"></i>Edit</button>';
+                        $deleteButton = '<button class="btn btn-sm btn-danger d-inline-flex  align-items-baseline " onclick="confirmDelete(`/admin/user/' . $user->id . '`, `user-table`)"><i class="fas fa-trash mr-1"></i>Hapus</button>';
                         return $editButton . $deleteButton;
                     })
                     ->addColumn('image', function ($user) {
@@ -64,7 +64,7 @@ class UserController extends Controller
         $user = User::create([
             'nama' => $request->nama,
             'email' => $request->email,
-            'password' => $request->password,
+            'password' => bcrypt($request->password),
             'role' => $request->role,
             'image' => $image ?? 'default.jpg',
         ]);
@@ -147,7 +147,7 @@ class UserController extends Controller
         $user = User::find($id);
 
         if (!$user) {
-            return $this->errorResponse(null, 'Data Buku Tidak Ada!');
+            return $this->errorResponse(null, 'Data User Tidak Ada!');
         }
 
         if ($user->image != 'default.jpg' && Storage::exists('public/img/user/' . $user->image)) {
@@ -156,6 +156,6 @@ class UserController extends Controller
 
         $user->delete();
 
-        return $this->successResponse(null, 'Data Buku Dihapus!');
+        return $this->successResponse(null, 'Data User Dihapus!');
     }
 }

@@ -104,7 +104,7 @@
 
                 if (kode !== "") {
                     data.append("_method", "PUT");
-                    url = `/member/${kode}`;
+                    url = `/admin/member/${kode}`;
                 }
 
                 const successCallback = function(response) {
@@ -130,7 +130,7 @@
 
                 if (kode !== "") {
                     data.append("_method", "PUT");
-                    url = `/member/${kode}`;
+                    url = `/admin/member/${kode}`;
                 }
 
                 const successCallback = function(response) {
