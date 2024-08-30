@@ -21,7 +21,7 @@
                                 <h4 class="text-dark">Data @yield('title')</h4>
                             </div>
                             <div class="card-body">
-                                <form id="updateData" enctype="multipart/form-data">
+                                <form id="updateData">
                                     @method('PUT')
                                     <div class="form-group">
                                         <label for="image" class="form-label">Foto </label>
@@ -174,7 +174,7 @@
                         setButtonLoadingState("#updateData .btn.btn-success", false);
                         handleSuccess(response, null, null, "no");
                         $(".img-navbar").css("background-image",
-                            `url('/storage/img/user/${response.data.image}')`);
+                            `url('/storage/img/karyawan/${response.data.image}')`);
                     };
 
                     const errorCallback = function(error) {

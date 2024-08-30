@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Book;
-use App\Models\Loan;
-use App\Models\Visit;
-use App\Models\Member;
-use App\Models\Category;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
+use App\Models\Buku;
+use App\Models\Siswa;
+use App\Models\Kategori;
+use App\Models\Kunjungan;
+use App\Models\Peminjaman;
 use Illuminate\Http\Request;
 use App\Traits\JsonResponder;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -24,7 +24,7 @@ class DashboardController extends Controller
             $startDate = Carbon::create($tahun, $bulan, 1)->startOfMonth();
             $endDate = Carbon::create($tahun, $bulan, 1)->endOfMonth();
 
-            $berkunjungData = Visit::whereBetween('tanggal', [$startDate, $endDate])
+            $berkunjungData = Kunjungan::whereBetween('tanggal', [$startDate, $endDate])
                 ->groupBy('date')
                 ->orderBy('date')
                 ->get([
@@ -33,7 +33,7 @@ class DashboardController extends Controller
                 ])
                 ->pluck('count', 'date');
 
-            $peminjamanData = Loan::where('status', '0')
+            $peminjamanData = Peminjaman::where('status', '0')
                 ->whereBetween('tanggal_mulai', [$startDate, $endDate])
                 ->groupBy('date')
                 ->orderBy('date')
@@ -43,7 +43,7 @@ class DashboardController extends Controller
                 ])
                 ->pluck('count', 'date');
 
-            $pengembalianData = Loan::where('status', '1')
+            $pengembalianData = Peminjaman::where('status', '1')
                 ->whereBetween('tanggal_kembali', [$startDate, $endDate])
                 ->groupBy('date')
                 ->orderBy('date')
@@ -76,12 +76,12 @@ class DashboardController extends Controller
             ], 'Data Kunjungan, Peminjaman dan Pengembalian ditemukan.');
         }
 
-        $books = Book::count();
-        $category = Category::count();
-        $members = Member::count();
-        $pengembalian = Loan::where('status', '1')->count();
-        $loans = Loan::where('status', '0')->count();
-        $berkunjung = Visit::count();
+        $books = Buku::count();
+        $category = Kategori::count();
+        $members = Siswa::count();
+        $pengembalian = Peminjaman::where('status', '1')->count();
+        $loans = Peminjaman::where('status', '0')->count();
+        $berkunjung = Kunjungan::count();
 
         return view('pages.dashboard.index', compact('books', 'category', 'members', 'loans', 'pengembalian', 'berkunjung'));
     }

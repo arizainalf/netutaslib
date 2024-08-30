@@ -2527,6 +2527,14 @@ a.bb {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
 }
 
+.img-navbar {
+  width: 25px;
+  height: 25px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+}
+
 .colors {
   display: flex;
   flex-wrap: wrap;

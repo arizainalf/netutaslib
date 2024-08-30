@@ -21,7 +21,7 @@
                                 <h4 class="text-dark">Data @yield('title')</h4>
                             </div>
                             <div class="card-body">
-                                <form id="updateData" enctype="multipart/form-data">
+                                <form id="updateData">
                                     @method('PUT')
                                     <div class="form-group">
                                         <label for="image" class="form-label">Foto </label>
@@ -128,71 +128,52 @@
     <script src="{{ asset('library/dropify/js/dropify.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
     <script>
-        let cropper;
-
         $(document).ready(function() {
             $('.dropify').dropify();
 
-            $("#image").on("change", function(e) {
-                const files = e.target.files;
-                if (files && files.length > 0) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        $("#image-crop-container").show();
-                        $("#image-crop").attr("src", e.target.result);
-                        cropper = new Cropper(document.getElementById("image-crop"), {
-                            aspectRatio: 1,
-                            viewMode: 1
-                        });
-                    };
-                    reader.readAsDataURL(files[0]);
-                }
-            });
-
-            $("#crop-image-btn").on("click", function() {
-                const canvas = cropper.getCroppedCanvas({
-                    width: 300,
-                    height: 300
-                });
-                canvas.toBlob(function(blob) {
-                    const formData = new FormData();
-                    formData.append("image", blob);
-                    formData.append("_method", "PUT");
-
-                    // Append other form data
-                    $("#updateData").serializeArray().forEach(field => {
-                        formData.append(field.name, field.value);
-                    });
-
-                    // Send the data to the server
-                    const url = `{{ route('profil') }}`;
-
-                    const successCallback = function(response) {
-                        $('#image').parent().find(".dropify-clear").trigger('click');
-                        $("#image-crop-container").hide();
-                        cropper.destroy();
-                        setButtonLoadingState("#updateData .btn.btn-success", false);
-                        handleSuccess(response, null, null, "no");
-                        $(".img-navbar").css("background-image",
-                            `url('/storage/img/user/${response.data.image}')`);
-                    };
-
-                    const errorCallback = function(error) {
-                        setButtonLoadingState("#updateData .btn.btn-success", false);
-                        handleValidationErrors(error, "updateData", ["nama", "email", "image"]);
-                    };
-
-                    ajaxCall(url, "POST", formData, successCallback, errorCallback);
-                });
-            });
-
             $("#updateData").submit(function(e) {
+                setButtonLoadingState("#updateData .btn.btn-success", true);
                 e.preventDefault();
-                if (!cropper) {
-                    alert("Please select and crop an image first.");
-                    return;
-                }
-                $("#crop-image-btn").trigger("click");
+                const url = `{{ route('profil') }}`;
+                const data = new FormData(this);
+
+                const successCallback = function(response) {
+                    $('#image').parent().find(".dropify-clear").trigger('click');
+                    setButtonLoadingState("#updateData .btn.btn-success", false);
+                    handleSuccess(response, null, null, "no");
+                    $(".img-navbar").css("background-image",
+                        `url('/storage/img/user/${response.data.image}')`);
+                };
+
+                const errorCallback = function(error) {
+                    setButtonLoadingState("#updateData .btn.btn-success", false);
+                    handleValidationErrors(error, "updateData", ["nama", "email", "no_hp",
+                        "image"
+                    ]);
+                };
+
+                ajaxCall(url, "POST", data, successCallback, errorCallback);
+            });
+
+            $("#updatePassword").submit(function(e) {
+                setButtonLoadingState("#updatePassword .btn.btn-success", true);
+                e.preventDefault();
+                const url = `{{ route('profil.password') }}`;
+                const data = new FormData(this);
+
+                const successCallback = function(response) {
+                    setButtonLoadingState("#updatePassword .btn.btn-success", false);
+                    handleSuccess(response, null, null, "no");
+                    $('#updatePassword .form-control').removeClass("is-invalid").val("");
+                    $('#updatePassword .text-danger').html("");
+                };
+
+                const errorCallback = function(error) {
+                    setButtonLoadingState("#updatePassword .btn.btn-success", false);
+                    handleValidationErrors(error, "updatePassword", ["password_lama", "password"]);
+                };
+
+                ajaxCall(url, "POST", data, successCallback, errorCallback);
             });
         });
     </script>

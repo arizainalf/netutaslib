@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Member;
-use App\Models\Visit;
+use App\Models\Siswa;
+use App\Models\Kunjungan;
 use App\Traits\JsonResponder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -14,24 +14,24 @@ class SearchController extends Controller
     public function search(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'keyword' => 'required|exists:members,nisn',
+            'keyword' => 'required|exists:siswas,nipd',
         ]);
 
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), 'Data Member Tidak Ditemukan.', 422);
+            return $this->errorResponse($validator->errors(), 'Data Siswa Tidak Ditemukan.', 422);
         }
 
         $keyword = $request->keyword;
 
-        $member = Member::where('nisn', $keyword)->orWhere('nipd', $keyword)->first();
+        $siswa = Siswa::where('nipd', $keyword)->orWhere('nipd', $keyword)->first();
 
-        return $this->successResponse($member, 'Data Member Ditemukan!');
+        return $this->successResponse($siswa, 'Data Siswa Ditemukan!');
     }
     
     public function saveAttend(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'member_id' => 'required|exists:members,id',
+            'id_siswa' => 'required|exists:siswas,id',
             'deskripsi' => 'required',
         ]);
 
@@ -39,12 +39,12 @@ class SearchController extends Controller
             return $this->errorResponse($validator->errors(), 'Kepentingan Kunjungan Wajib Diisi!.', 422);
         }
 
-        $cekVisit = Visit::where('member_id', $request->member_id)->where('tanggal', date('Y-m-d'))->first();
+        $cekVisit = Kunjungan::where('id_siswa', $request->id_siswa)->where('tanggal', date('Y-m-d'))->first();
         if ($cekVisit) {
             return $this->errorResponse(null, 'Maaf Anda Sudah Berkunjung Hari Ini!');
         }
-        $visit = Visit::create([
-            'member_id' => $request->member_id,
+        $visit = Kunjungan::create([
+            'id_siswa' => $request->id_siswa,
             'deskripsi' => $request->deskripsi,
             'tanggal' => now(),
         ]);

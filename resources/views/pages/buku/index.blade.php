@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'User')
+@section('title', 'Buku')
 
 @push('style')
     <link rel="stylesheet" href="{{ asset('library/datatables/datatables.min.css') }}">
@@ -28,15 +28,24 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        <div class="mb-3">
+                            <a href="{{ route('buku.show', 'pdf') }}" class="btn btn-sm px-3 btn-danger mr-1"
+                                target="_blank"><i class="fas fa-file-pdf mr-2"></i>Pdf</a>
+                            <a href="{{ route('buku.show', 'excel') }}" class="btn btn-sm px-3 btn-info" target="_blank"><i
+                                    class="fas fa-file-excel mr-2"></i>Excel</a>
+                        </div>
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped" id="user-table" width="100%">
+                            <table class="table table-bordered table-striped" id="book-table" width="100%">
                                 <thead>
                                     <tr>
                                         <th scope="col" width="5%">#</th>
                                         <th scope="col" width="10%">Gambar</th>
-                                        <th scope="col">Nama</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">Role</th>
+                                        <th scope="col">Judul</th>
+                                        <th scope="col">Kategori</th>
+                                        <th scope="col">Penulis</th>
+                                        <th scope="col">Penerbit</th>
+                                        <th scope="col">Tahun</th>
+                                        <th scope="col">Stok</th>
                                         <th scope="col" width="20%">Aksi</th>
                                     </tr>
                                 </thead>
@@ -49,7 +58,7 @@
             </div>
         </section>
     </div>
-    @include('pages.user.modal')
+    @include('pages.buku.modal')
 @endsection
 
 @push('scripts')
@@ -64,7 +73,7 @@
         $(document).ready(function() {
             $('.dropify').dropify();
 
-            datatableCall('user-table', '{{ route('user.index') }}', [{
+            datatableCall('book-table', '{{ route('buku.index') }}', [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex'
                 },
@@ -73,16 +82,28 @@
                     name: 'image'
                 },
                 {
-                    data: 'nama',
-                    name: 'nama'
+                    data: 'judul',
+                    name: 'judul'
                 },
                 {
-                    data: 'email',
-                    name: 'email'
+                    data: 'category',
+                    name: 'category'
                 },
                 {
-                    data: 'role',
-                    name: 'role'
+                    data: 'penulis',
+                    name: 'penulis'
+                },
+                {
+                    data: 'penerbit',
+                    name: 'penerbit'
+                },
+                {
+                    data: 'tahun',
+                    name: 'tahun'
+                },
+                {
+                    data: 'stok',
+                    name: 'stok'
                 },
                 {
                     data: 'action',
@@ -95,23 +116,23 @@
                 setButtonLoadingState("#saveData .btn.btn-success", true);
                 e.preventDefault();
                 const kode = $("#saveData #id").val();
-                let url = "{{ route('user.store') }}";
+                let url = "{{ route('buku.store') }}";
                 const data = new FormData(this);
 
                 if (kode !== "") {
                     data.append("_method", "PUT");
-                    url = `/admin/user/${kode}`;
+                    url = `/admin/book/${kode}`;
                 }
 
                 const successCallback = function(response) {
                     setButtonLoadingState("#saveData .btn.btn-success", false);
-                    handleSuccess(response, "user-table", "createModal");
+                    handleSuccess(response, "book-table", "createModal");
                 };
 
                 const errorCallback = function(error) {
                     setButtonLoadingState("#saveData .btn.btn-success", false);
-                    handleValidationErrors(error, "saveData", ["nama", "role", "email",
-                        "password", "image"
+                    handleValidationErrors(error, "saveData", ["category_id", "judul", "penulis",
+                        "penerbit", "tahun", "stok", "image"
                     ]);
                 };
 

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\ProfilController;
 use App\Traits\JsonResponder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,12 +12,13 @@ use Illuminate\Support\Facades\Validator;
 class ProfilController extends Controller
 {
     use JsonResponder;
+
     public function index(Request $request)
     {
         if ($request->isMethod('put')) {
             $validator = Validator::make($request->all(), [
                 'nama' => 'required',
-                'image' => 'image|mimes:png,jpg,jpeg',
+                'image' => 'image|mimes:png,jpg,jpeg', // Validasi untuk file gambar
                 'email' => 'required|email|unique:users,email,' . Auth::user()->id,
             ]);
 
@@ -38,9 +38,12 @@ class ProfilController extends Controller
             ];
 
             if ($request->hasFile('image')) {
-                if ($user->image != 'default.png' && Storage::exists('public/img/user/' . $user->image)) {
+                // Hapus gambar lama jika bukan gambar default
+                if (Storage::exists('public/img/user/' . $user->image)) {
                     Storage::delete('public/img/user/' . $user->image);
                 }
+
+                // Simpan gambar baru dengan nama hash
                 $image = $request->file('image')->hashName();
                 $request->file('image')->storeAs('public/img/user', $image);
                 $updateUser['image'] = $image;

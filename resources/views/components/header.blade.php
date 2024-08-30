@@ -9,10 +9,10 @@
     <ul class="navbar-nav navbar-right">
 
         <li class="dropdown"><a href="#" data-toggle="dropdown"
-                class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                <img alt="image" src="{{ asset('/storage/img/user/' . auth()->user()->image ?? 'default.jpg') }}"
-                    class="img-fluid rounded-circle mr-1">
-                <div class="d-sm-none d-lg-inline-block">Hi, {{ auth()->user()->nama ?? 'Login Dulu Bre!' }}</div>
+                class="nav-link dropdown-toggle nav-link-lg nav-link-user d-flex justify-content-center align-items-center">
+                <div style="background-image: url('{{ asset(Auth::user()->image != 'default.png' ? '/storage/img/user/' . Auth::user()->image : '/images/default.png') }}');"
+                    class="img-navbar d-block mr-3"></div>
+                <div class="d-sm-none d-lg-inline-block">Hi, {{ auth()->user()->nama ?? 'Login Terlebih Dahulu!' }}</div>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <a href="{{ url('admin/profil') }}" class="dropdown-item has-icon">

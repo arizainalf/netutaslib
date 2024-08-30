@@ -10,23 +10,34 @@
             <li class="nav-item  {{ Request::is('admin') ? 'active' : '' }}">
                 <a href="{{ url('/admin') }}" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
             </li>
-            <li class="nav-item {{ Request::is('admin/category') ? 'active' : '' }}">
-                <a href="{{ url('admin/category') }}" class="nav-link"><i class="fas fa-columns"></i>
+            <li class="nav-item {{ Request::is('admin/kelas') ? 'active' : '' }}">
+                <a href="{{ url('admin/kelas') }}" class="nav-link"><i class="fas fa-book"></i> <span>Kelas</span></a>
+            </li>
+            <li class="nav-item {{ Request::is('admin/siswa') ? 'active' : '' }}">
+                <a href="{{ url('admin/siswa') }}" class="nav-link"><i class="fas fa-users"></i>
+                    <span>Siswa</span></a>
+            </li>
+            <li class="nav-item {{ Request::is('admin/mapel') ? 'active' : '' }}">
+                <a href="{{ url('admin/mapel') }}" class="nav-link"><i class="fas fa-users"></i>
+                    <span>Mapel</span></a>
+            </li>
+            <li class="nav-item {{ Request::is('admin/kategori') ? 'active' : '' }}">
+                <a href="{{ url('admin/kategori') }}" class="nav-link"><i class="fas fa-columns"></i>
                     <span>Kategori</span></a>
             </li>
-            <li class="nav-item {{ Request::is('admin/book') ? 'active' : '' }}">
-                <a href="{{ url('admin/book') }}" class="nav-link"><i class="fas fa-book"></i> <span>Buku</span></a>
+            <li class="nav-item {{ Request::is('admin/buku') ? 'active' : '' }}">
+                <a href="{{ url('admin/buku') }}" class="nav-link"><i class="fas fa-book"></i> <span>Buku</span></a>
             </li>
-            <li class="nav-item {{ Request::is('admin/member') ? 'active' : '' }}">
-                <a href="{{ url('admin/member') }}" class="nav-link"><i class="fas fa-users"></i>
-                    <span>Member</span></a>
+            <li class="nav-item {{ Request::is('admin/peminjamanmapel') ? 'active' : '' }}">
+                <a href="{{ url('admin/peminjamanmapel') }}" class="nav-link"><i class="fas fa-book-open"></i>
+                    <span>Peminjaman Buku Mapel</span></a>
             </li>
-            <li class="nav-item {{ Request::is('admin/loan') ? 'active' : '' }}">
-                <a href="{{ url('admin/loan') }}" class="nav-link"><i class="fas fa-book-open"></i>
+            <li class="nav-item {{ Request::is('admin/peminjaman') ? 'active' : '' }}">
+                <a href="{{ url('admin/peminjaman') }}" class="nav-link"><i class="fas fa-book-open"></i>
                     <span>Peminjaman</span></a>
             </li>
-            <li class="nav-item {{ Request::is('admin/visit') ? 'active' : '' }}">
-                <a href="{{ url('admin/visit') }}" class="nav-link"><i class="fas fa-walking"></i>
+            <li class="nav-item {{ Request::is('admin/kunjungan') ? 'active' : '' }}">
+                <a href="{{ url('admin/kunjungan') }}" class="nav-link"><i class="fas fa-walking"></i>
                     <span>Kunjungan</span></a>
             </li>
             <li class="nav-item {{ Request::is('admin/user') ? 'active' : '' }}">
