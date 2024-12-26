@@ -23,7 +23,7 @@ class UserController extends Controller
             if ($request->mode == "datatable") {
                 return DataTables::of($users)
                     ->addColumn('action', function ($user) {
-                        $editButton = '<button class="btn btn-sm btn-warning d-inline-flex  align-items-baseline  mr-1" onclick="getModal(`createModal`, `/admin/user/' . $user->id . '`, [`id`, `nama`,`email`,`role`])"><i class="fas fa-edit mr-1"></i>Edit</button>';
+                        $editButton = '<button class="btn btn-sm btn-warning d-inline-flex  align-items-baseline  mr-1" onclick="getModal(`createModal`, `/admin/user/' . $user->id . '`, [`id`, `name`,`email`])"><i class="fas fa-edit mr-1"></i>Edit</button>';
                         $deleteButton = '<button class="btn btn-sm btn-danger d-inline-flex  align-items-baseline " onclick="confirmDelete(`/admin/user/' . $user->id . '`, `user-table`)"><i class="fas fa-trash mr-1"></i>Hapus</button>';
                         return $editButton . $deleteButton;
                     })

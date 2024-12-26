@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('peminjaman_tahunans', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('id_kelas');
             $table->unsignedBigInteger('id_mapel');
             $table->unsignedBigInteger('id_siswa');
             $table->string('kode')->unique();
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->date('tanggal_kembali')->nullable();
             $table->timestamps();
 
+            $table->foreign('id_kelas')->references('id')->on('kelas')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('id_mapel')->references('id')->on('mapels')->onDelete('cascade');
             $table->foreign('id_siswa')->references('id')->on('siswas')->onDelete('cascade');

@@ -24,11 +24,11 @@
     <table width="100%" border="0" cellpadding="2.5" cellspacing="0">
         <tbody>
             <tr>
-                <td width='20%'>
+                <td>
                     {{-- <img width='120px' src="{{ generateBase64Image(public_path('images/logo-pemkot.png')) }}"
                         alt=""> --}}
                 </td>
-                <td align="center">
+                <td>
                     <h3>PERPUSTAKAAN SMPN 7 TASIKMALAYA </h3>
                     <h3>KAMPUS MENGAJAR 7</h3>
                     <h3>SEKOLAHKU NYAMAN</h3>
@@ -38,8 +38,8 @@
                         </span>
                     </div>
                 </td>
-                <td width='20%' align="right"><img width='120px'
-                        src="{{ generateBase64Image(public_path('images/logo-psc.png')) }}" alt=""> </td>
+                {{-- <td width='20%' align="right"><img width='120px'
+                        src="{{ generateBase64Image(public_path('images/logo-psc.png')) }}" alt=""> </td> --}}
             </tr>
         </tbody>
     </table>

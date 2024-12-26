@@ -60,6 +60,34 @@
     <script src="{{ asset('library/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
 
     <script>
+        const datatableCall = (targetId, url, columns) => {
+            $(`#${targetId}`).DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: url,
+                    type: "GET",
+                    data: function(d) {
+                        d.mode = "datatable";
+                        d.tanggal_mulai = $("#tanggal_mulai").val() ?? null;
+                        d.tanggal_selesai = $("#tanggal_selesai").val() ?? null;
+                        d.bulan = $("#bulan_filter").val() ?? null;
+                        d.tahun = $("#tahun_filter").val() ?? null;
+                        d.tanggal = $("#tanggal_filter").val() ?? null;
+                    },
+                },
+                columns: columns,
+                lengthMenu: [
+                    [25, 50, 100, 250, -1],
+                    [25, 50, 100, 250, "All"],
+                ],
+                columnDefs: [{
+                    width: "5%",
+                    targets: 0
+                }],
+            });
+        };
+
         $(document).ready(function() {
             datatableCall('category-table', '{{ route('kategori.index') }}', [{
                     data: 'DT_RowIndex',

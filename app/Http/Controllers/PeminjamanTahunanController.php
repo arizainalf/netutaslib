@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use DataTables;
 use App\Models\Buku;
-use App\Models\PeminjamanTahunan;
+use App\Models\Siswa;
 use Illuminate\Http\Request;
 use App\Traits\JsonResponder;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\PeminjamanTahunan;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -25,7 +26,7 @@ class PeminjamanTahunanController extends Controller
             if ($request->mode == "datatable") {
                 return DataTables::of($peminjamans)
                     ->addColumn('action', function ($peminjaman) {
-                        $approveButton = $peminjaman->status == '0' ? '<button class="btn btn-sm btn-info d-inline-flex  align-items-baseline " onclick="confirmApprove(`/admin/loan/approve/' . $peminjaman->id . '`, `loan-table`)"><i class="fa-solid fa-book-bookmark mr-1"></i>Konfirmasi</button>' : '<span class="badge badge-success">Dikembalikan</span>';
+                        $approveButton = $peminjaman->status == '0' ? '<button class="btn btn-sm btn-info d-inline-flex  align-items-baseline " onclick="confirmApprove(`/admin/peminjamanmapel/approve/' . $peminjaman->id . '`, `loan-table`)"><i class="fa-solid fa-book-bookmark mr-1"></i>Konfirmasi</button>' : '<span class="badge badge-success">Dikembalikan</span>';
                         return $approveButton;
                     })
                     ->addColumn('user', function ($peminjaman) {

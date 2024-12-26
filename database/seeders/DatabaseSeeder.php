@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
         $usersData = [
+            ['nama' => 'Admin', 'email' => 'admin@gmail.com', 'password' => bcrypt('11221122'), 'role' => 'Admin'],
             ['nama' => 'Ari Zainal Fauziah', 'email' => 'arizainalf@gmail.com', 'password' => bcrypt('11221122'), 'role' => 'Admin'],
             ['nama' => 'Ihsan Maulana', 'email' => 'ihsanm@gmail.com', 'password' => bcrypt('11221122'), 'role' => 'Admin'],
         ];

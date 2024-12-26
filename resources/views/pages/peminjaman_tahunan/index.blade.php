@@ -42,13 +42,12 @@
                                         <th scope="col" width="5%">#</th>
                                         <th scope="col">Kode</th>
                                         <th scope="col">Mapel</th>
-                                        <th scope="col">Kelas</th>
                                         <th scope="col">Siswa</th>
                                         <th scope="col">Tanggal Pinjam</th>
                                         <th scope="col">Tanggal Selesai</th>
                                         <th scope="col">Status</th>
-                                        <th scope="col">Admin</th>
-                                        <th scope="col">Aksi</th>
+                                        <th scope="col">Pengelola</th>
+s                                       <th scope="col">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -143,10 +142,10 @@
                 ajaxCall(url, "POST", data, successCallback, errorCallback);
             });
             $("#saveMassData").submit(function(e) {
-                setButtonLoadingState("#saveData .btn.btn-success", true);
+                setButtonLoadingState("#saveMassData .btn.btn-success", true);
                 e.preventDefault();
-                const kode = $("#saveData #id").val();
-                let url = "{{ route('peminjamanmapel.massinsert') }}";
+                const kode = $("#saveMassData #id").val();
+                let url = "{{ route('peminjamanmapel.mass-insert') }}";
                 const data = new FormData(this);
 
                 if (kode !== "") {
@@ -155,13 +154,13 @@
                 }
 
                 const successCallback = function(response) {
-                    setButtonLoadingState("#saveData .btn.btn-success", false);
+                    setButtonLoadingState("#saveMassData .btn.btn-success", false);
                     handleSuccess(response, "peminjaman-table", "createModal");
                 };
 
                 const errorCallback = function(error) {
-                    setButtonLoadingState("#saveData .btn.btn-success", false);
-                    handleValidationErrors(error, "saveData", ['id_siswa', 'id_mapel',
+                    setButtonLoadingState("#saveMassData .btn.btn-success", false);
+                    handleValidationErrors(error, "saveMassData", ['id_siswa', 'id_mapel',
                         "kode", "tanggal_mulai", "tanggal_selesai", "status"
                     ]);
                 };

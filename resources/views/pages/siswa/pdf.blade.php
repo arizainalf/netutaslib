@@ -1,4 +1,4 @@
-@extends('layouts.pdf')
+@extends('layouts.inpdf')
 
 @section('title', 'Siswa')
 

@@ -19,8 +19,11 @@ const datatableCall = (targetId, url, columns) => {
             [25, 50, 100, 250, -1],
             [25, 50, 100, 250, "All"],
         ],
-        // su
         columnDefs: [{ width: "5%", targets: 0 }],
+        createdRow: function (row, data, dataIndex) {
+            // Add a class to each <td> in the row
+            $(row).find('td').addClass('your-custom-class'); // Replace 'your-custom-class' with the desired class name
+        },
     });
 };
 

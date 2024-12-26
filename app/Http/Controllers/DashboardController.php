@@ -17,7 +17,7 @@ class DashboardController extends Controller
     use JsonResponder;
 
     public function index(Request $request)
-    {     
+    {
         if ($request->ajax()) {
             $bulan = $request->bulan;
             $tahun = $request->tahun;

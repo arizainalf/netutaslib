@@ -13,7 +13,7 @@
                     <input type="hidden" id="user_id" value="{{ auth()->user()->id }}">
                     <div class="form-group">
                         <label for="id_mapels" class="form-label">Buku Mata Pelajaran<span class="text-danger">*</span></label>
-                        <select name="id_mapels" id="id_mapels" class="form-control">
+                        <select name="id_mapel" id="id_mapel" class="form-control">
                         </select>
                         <small class="invalid-feedback" id="errorid_mapel"></small>
                     </div>
@@ -39,7 +39,6 @@
     </div>
 </div>
 
-{{-- mass insert --}}
 <div class="modal fade" role="dialog" id="createModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
